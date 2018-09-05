@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This file was auto-generated from WSDL -->
+<!-- by the Apache Axis2 version: 1.7.8  Built on : May 19, 2018 (07:06:11 BST) -->
+<serviceGroup>
+    <service name="DSoftQBWCSoapService">
+        <messageReceivers>
+            <messageReceiver mep="http://www.w3.org/ns/wsdl/in-out" class="com.dickersonsoftware.intuit.DSoftQBWCSoapServiceMessageReceiverInOut"/>
+        </messageReceivers>
+        <parameter name="ServiceClass">com.dickersonsoftware.intuit.DSoftQBWCSoapServiceSkeleton</parameter>
+        <parameter name="useOriginalwsdl">true</parameter>
+        <parameter name="modifyUserWSDLPortAddress">true</parameter>
+        <operation name="sendRequestXML" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://intuit.dickersonsoftware.com/">
+            <actionMapping>http://intuit.dickersonsoftware.com/sendRequestXML</actionMapping>
+            <outputActionMapping>http://intuit.dickersonsoftware.com/DSoftQBWCSoapService/sendRequestXMLResponse</outputActionMapping>
+        </operation>
+        <operation name="connectionError" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://intuit.dickersonsoftware.com/">
+            <actionMapping>http://intuit.dickersonsoftware.com/connectionError</actionMapping>
+            <outputActionMapping>http://intuit.dickersonsoftware.com/DSoftQBWCSoapService/connectionErrorResponse</outputActionMapping>
+        </operation>
+        <operation name="authenticate" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://intuit.dickersonsoftware.com/">
+            <actionMapping>http://intuit.dickersonsoftware.com/authenticate</actionMapping>
+            <outputActionMapping>http://intuit.dickersonsoftware.com/DSoftQBWCSoapService/authenticateResponse</outputActionMapping>
+        </operation>
+        <operation name="receiveResponseXML" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://intuit.dickersonsoftware.com/">
+            <actionMapping>http://intuit.dickersonsoftware.com/receiveResponseXML</actionMapping>
+            <outputActionMapping>http://intuit.dickersonsoftware.com/DSoftQBWCSoapService/receiveResponseXMLResponse</outputActionMapping>
+        </operation>
+        <operation name="serverVersion" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://intuit.dickersonsoftware.com/">
+            <actionMapping>http://intuit.dickersonsoftware.com/serverVersion</actionMapping>
+            <outputActionMapping>http://intuit.dickersonsoftware.com/DSoftQBWCSoapService/serverVersionResponse</outputActionMapping>
+        </operation>
+        <operation name="getLastError" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://intuit.dickersonsoftware.com/">
+            <actionMapping>http://intuit.dickersonsoftware.com/getLastError</actionMapping>
+            <outputActionMapping>http://intuit.dickersonsoftware.com/DSoftQBWCSoapService/getLastErrorResponse</outputActionMapping>
+        </operation>
+        <operation name="closeConnection" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://intuit.dickersonsoftware.com/">
+            <actionMapping>http://intuit.dickersonsoftware.com/closeConnection</actionMapping>
+            <outputActionMapping>http://intuit.dickersonsoftware.com/DSoftQBWCSoapService/closeConnectionResponse</outputActionMapping>
+        </operation>
+        <operation name="clientVersion" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://intuit.dickersonsoftware.com/">
+            <actionMapping>http://intuit.dickersonsoftware.com/clientVersion</actionMapping>
+            <outputActionMapping>http://intuit.dickersonsoftware.com/DSoftQBWCSoapService/clientVersionResponse</outputActionMapping>
+        </operation>
+    </service>
+</serviceGroup>
