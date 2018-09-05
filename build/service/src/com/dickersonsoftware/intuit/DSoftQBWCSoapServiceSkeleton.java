@@ -19,9 +19,11 @@ public class DSoftQBWCSoapServiceSkeleton
      */
     public com.dickersonsoftware.intuit.SendRequestXMLResponse sendRequestXML(
         com.dickersonsoftware.intuit.SendRequestXML sendRequestXML0) {
-        //TODO : fill this with the necessary business logic
-        throw new java.lang.UnsupportedOperationException("Please implement " +
-            this.getClass().getName() + "#sendRequestXML");
+
+        System.out.println("Send Request");
+        com.dickersonsoftware.intuit.SendRequestXMLResponse response = new SendRequestXMLResponse();
+        response.setSendRequestXMLResult("");
+        return response;
     }
 
     /**
@@ -32,9 +34,11 @@ public class DSoftQBWCSoapServiceSkeleton
      */
     public com.dickersonsoftware.intuit.ConnectionErrorResponse connectionError(
         com.dickersonsoftware.intuit.ConnectionError connectionError2) {
-        //TODO : fill this with the necessary business logic
-        throw new java.lang.UnsupportedOperationException("Please implement " +
-            this.getClass().getName() + "#connectionError");
+
+        System.out.println("Connection Error");
+        com.dickersonsoftware.intuit.ConnectionErrorResponse response = new ConnectionErrorResponse();
+        response.setConnectionErrorResult("There was aConnection Error");
+        return response;
     }
 
     /**
@@ -45,9 +49,19 @@ public class DSoftQBWCSoapServiceSkeleton
      */
     public com.dickersonsoftware.intuit.AuthenticateResponse authenticate(
         com.dickersonsoftware.intuit.Authenticate authenticate4) {
-        //TODO : fill this with the necessary business logic
-        throw new java.lang.UnsupportedOperationException("Please implement " +
-            this.getClass().getName() + "#authenticate");
+
+        System.out.println("Authenticate");
+        com.dickersonsoftware.intuit.AuthenticateResponse response = new AuthenticateResponse();
+        com.dickersonsoftware.intuit.ArrayOfString array = new ArrayOfString();
+        if (authenticate4.getStrUserName().equals("dsoftclient") && authenticate4.getStrPassword().equals("password")) {
+            array.addString(java.util.UUID.randomUUID().toString());
+            array.addString("");
+        } else {
+            array.addString("NVU");
+            array.addString("");
+        }
+        response.setAuthenticateResult(array);
+        return response;
     }
 
     /**
@@ -58,9 +72,11 @@ public class DSoftQBWCSoapServiceSkeleton
      */
     public com.dickersonsoftware.intuit.ReceiveResponseXMLResponse receiveResponseXML(
         com.dickersonsoftware.intuit.ReceiveResponseXML receiveResponseXML6) {
-        //TODO : fill this with the necessary business logic
-        throw new java.lang.UnsupportedOperationException("Please implement " +
-            this.getClass().getName() + "#receiveResponseXML");
+
+        System.out.println("Receive Response");
+        com.dickersonsoftware.intuit.ReceiveResponseXMLResponse response = new ReceiveResponseXMLResponse();
+        response.setReceiveResponseXMLResult(100);
+        return response;
     }
 
     /**
@@ -71,9 +87,11 @@ public class DSoftQBWCSoapServiceSkeleton
      */
     public com.dickersonsoftware.intuit.ServerVersionResponse serverVersion(
         com.dickersonsoftware.intuit.ServerVersion serverVersion8) {
-        //TODO : fill this with the necessary business logic
-        throw new java.lang.UnsupportedOperationException("Please implement " +
-            this.getClass().getName() + "#serverVersion");
+
+        System.out.println("Server Version");
+        com.dickersonsoftware.intuit.ServerVersionResponse response = new ServerVersionResponse();
+        response.setServerVersionResult("1.0");
+        return response;
     }
 
     /**
@@ -84,9 +102,11 @@ public class DSoftQBWCSoapServiceSkeleton
      */
     public com.dickersonsoftware.intuit.GetLastErrorResponse getLastError(
         com.dickersonsoftware.intuit.GetLastError getLastError10) {
-        //TODO : fill this with the necessary business logic
-        throw new java.lang.UnsupportedOperationException("Please implement " +
-            this.getClass().getName() + "#getLastError");
+
+        System.out.println("Get Last Error");
+        com.dickersonsoftware.intuit.GetLastErrorResponse response = new GetLastErrorResponse();
+        response.setGetLastErrorResult("There was an Error");
+        return response;
     }
 
     /**
@@ -97,9 +117,11 @@ public class DSoftQBWCSoapServiceSkeleton
      */
     public com.dickersonsoftware.intuit.CloseConnectionResponse closeConnection(
         com.dickersonsoftware.intuit.CloseConnection closeConnection12) {
-        //TODO : fill this with the necessary business logic
-        throw new java.lang.UnsupportedOperationException("Please implement " +
-            this.getClass().getName() + "#closeConnection");
+
+        System.out.println("Close Connection");
+        com.dickersonsoftware.intuit.CloseConnectionResponse response = new CloseConnectionResponse();
+        response.setCloseConnectionResult("The Connection for the QBWC has been closed");
+        return response;
     }
 
     /**
@@ -110,8 +132,10 @@ public class DSoftQBWCSoapServiceSkeleton
      */
     public com.dickersonsoftware.intuit.ClientVersionResponse clientVersion(
         com.dickersonsoftware.intuit.ClientVersion clientVersion14) {
-        //TODO : fill this with the necessary business logic
-        throw new java.lang.UnsupportedOperationException("Please implement " +
-            this.getClass().getName() + "#clientVersion");
+
+        System.out.println("Client Version");
+        com.dickersonsoftware.intuit.ClientVersionResponse response = new ClientVersionResponse();
+        response.setClientVersionResult("");
+        return response;
     }
 }
