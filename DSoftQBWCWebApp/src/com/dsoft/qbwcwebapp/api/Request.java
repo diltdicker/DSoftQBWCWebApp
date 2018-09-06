@@ -20,12 +20,6 @@ import org.bson.Document;
  */
 @Path("/request")
 public class Request {
-
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getRequest() {
-		return Response.ok("{test : \"response\"}").status(Status.OK).build();
-	}
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)

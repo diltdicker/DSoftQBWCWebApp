@@ -19,7 +19,7 @@ public interface DBProxyInterface {
 	
 	public boolean createDocument(Document document);
 	
-	public Document getLastDocument();
+	public Document getLastDocument(Document document);
 	
-	public long getCollectionSize();
+	public long getCollectionSize(Document document);
 }

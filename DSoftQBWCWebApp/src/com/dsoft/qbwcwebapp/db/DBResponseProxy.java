@@ -49,13 +49,13 @@ public class DBResponseProxy implements DBProxyInterface {
 	}
 
 	@Override
-	public Document getLastDocument() {
-		return collection.find().first();
+	public Document getLastDocument(Document document) {
+		return collection.find(document).first();
 	}
 
 	@Override
-	public long getCollectionSize() {
-		return collection.countDocuments();
+	public long getCollectionSize(Document document) {
+		return collection.countDocuments(document);
 	}
 
 	@Override

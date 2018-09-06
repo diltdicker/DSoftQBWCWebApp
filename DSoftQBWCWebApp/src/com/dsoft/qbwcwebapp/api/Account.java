@@ -32,7 +32,7 @@ public class Account {
 		if (document != null && document.containsKey("username") && document.containsKey("password")) {
 			Document newAccount = new Document();
 			DBAccountProxy accountProxy = DBProxyFactory.getFactory().getAccounts();
-			newAccount.put("username", (String) document.get("username"));
+			newAccount.put("username", (String) document.getString("username"));
 			newAccount.put("passhash", Crypto.initHash(document.getString("password")));
 			newAccount.put("token", UUID.randomUUID().toString());
 			if (accountProxy.createDocument(newAccount)) {

@@ -42,19 +42,20 @@ public class DBRequestProxy implements DBProxyInterface {
 				return false;
 			}
 		} else {
-			
+			document.put("reqID", getNewestID());
+			collection.insertOne(document);
 			return true;
 		}
 	}
 
 	@Override
-	public Document getLastDocument() {
-		return collection.find().first();
+	public Document getLastDocument(Document document) {
+		return collection.find(document).first();
 	}
 
 	@Override
-	public long getCollectionSize() {
-		return collection.countDocuments();
+	public long getCollectionSize(Document document) {
+		return collection.countDocuments(document);
 	}
 
 	@Override
