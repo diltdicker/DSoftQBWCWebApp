@@ -31,6 +31,7 @@ public class DBProxyFactory {
 		InputStream stream = getClass().getClassLoader().getResourceAsStream(configfile);
 		try {
 			properties.load(stream);
+			stream.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new MissingConfigException("missing file " + configfile);

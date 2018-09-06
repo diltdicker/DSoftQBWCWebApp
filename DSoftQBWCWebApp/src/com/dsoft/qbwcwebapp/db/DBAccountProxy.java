@@ -33,14 +33,17 @@ public class DBAccountProxy implements DBProxyInterface {
 
 	@Override
 	public boolean createDocument(Document document) {
-		// TODO Auto-generated method stub
-		return false;
+		if (getDocument(new Document().append("username", document.getString("username"))) == null) {
+			collection.insertOne(document);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
 	public Document getLastDocument() {
-		// TODO Auto-generated method stub
-		return null;
+		return collection.find().first();
 	}
 
 	@Override

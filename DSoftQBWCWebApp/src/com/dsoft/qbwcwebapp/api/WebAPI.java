@@ -17,7 +17,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class WebAPI extends ResourceConfig{
 	
 	public WebAPI() {
-		System.out.println("Resource config");
+//		System.out.println("Resource config");
 		packages("com.dickersonsoftware.api");
 	}
 

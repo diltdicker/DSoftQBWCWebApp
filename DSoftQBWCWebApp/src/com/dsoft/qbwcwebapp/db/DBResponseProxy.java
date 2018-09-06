@@ -5,7 +5,9 @@ package com.dsoft.qbwcwebapp.db;
 
 import org.bson.Document;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 
 /**
  * @author dillon
@@ -21,26 +23,34 @@ public class DBResponseProxy implements DBProxyInterface {
 
 	@Override
 	public Document getDocument(Document document) {
-		// TODO Auto-generated method stub
-		return null;
+		FindIterable<Document> iterable = collection.find(document);
+		return iterable.first();
 	}
 
 	@Override
 	public void deleteDocument(Document document) {
-		// TODO Auto-generated method stub
-		
+		collection.findOneAndDelete(document);
 	}
 
 	@Override
 	public boolean createDocument(Document document) {
-		// TODO Auto-generated method stub
-		return false;
+		if (document.containsKey("reqID")) {
+			if (getDocument(new Document().append("reqID", document.getLong("reqID"))) == null) {
+				collection.insertOne(document);
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			document.put("reqID", getNewestID());
+			collection.insertOne(document);
+			return true;
+		}
 	}
 
 	@Override
 	public Document getLastDocument() {
-		// TODO Auto-generated method stub
-		return null;
+		return collection.find().first();
 	}
 
 	@Override
@@ -50,6 +60,19 @@ public class DBResponseProxy implements DBProxyInterface {
 
 	@Override
 	public void updateDocument(Document document, Document updatedDocument) {
-		// TODO Auto-generated method stub
+		collection.findOneAndReplace(document, updatedDocument);
+	}
+	
+	public long getNewestID() {
+		long id = -1;
+		MongoCursor<Document> cursor = collection.find().iterator();
+		while (cursor.hasNext()) {
+			Document tmpDocument = cursor.next();
+			if (tmpDocument.getLong("reqID") > id) {
+				id = tmpDocument.getLong("reqID");
+			}
+		}
+		cursor.close();
+		return id;
 	}
 }

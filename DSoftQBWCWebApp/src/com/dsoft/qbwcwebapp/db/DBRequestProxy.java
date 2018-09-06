@@ -7,6 +7,7 @@ import org.bson.Document;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 
 /**
  * @author dillon
@@ -28,20 +29,27 @@ public class DBRequestProxy implements DBProxyInterface {
 
 	@Override
 	public void deleteDocument(Document document) {
-		// TODO Auto-generated method stub
-		
+		collection.findOneAndDelete(document);
 	}
 
 	@Override
 	public boolean createDocument(Document document) {
-		// TODO Auto-generated method stub
-		return false;
+		if (document.containsKey("reqID")) {
+			if (getDocument(new Document().append("reqID", document.getLong("reqID"))) == null) {
+				collection.insertOne(document);
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			
+			return true;
+		}
 	}
 
 	@Override
 	public Document getLastDocument() {
-		// TODO Auto-generated method stub
-		return null;
+		return collection.find().first();
 	}
 
 	@Override
@@ -51,6 +59,19 @@ public class DBRequestProxy implements DBProxyInterface {
 
 	@Override
 	public void updateDocument(Document document, Document updatedDocument) {
-		// TODO Auto-generated method stub
+		collection.findOneAndReplace(document, updatedDocument);
+	}
+	
+	public long getNewestID() {
+		long id = -1;
+		MongoCursor<Document> cursor = collection.find().iterator();
+		while (cursor.hasNext()) {
+			Document tmpDocument = cursor.next();
+			if (tmpDocument.getLong("reqID") > id) {
+				id = tmpDocument.getLong("reqID");
+			}
+		}
+		cursor.close();
+		return id;
 	}
 }
