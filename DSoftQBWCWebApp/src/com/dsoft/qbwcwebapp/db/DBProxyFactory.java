@@ -19,13 +19,13 @@ import com.mongodb.client.MongoDatabase;
  * @author dillon
  *
  */
-public class ProxyFactory {
+public class DBProxyFactory {
 
-	private static ProxyFactory factory = null;
+	private static DBProxyFactory factory = null;
 	private MongoClient client = null;
 	private MongoDatabase database = null;
 	
-	private ProxyFactory() {
+	private DBProxyFactory() {
 		Properties properties = new Properties();
 		String configfile = "config.properties";
 		InputStream stream = getClass().getClassLoader().getResourceAsStream(configfile);
@@ -41,37 +41,37 @@ public class ProxyFactory {
 		database = client.getDatabase(properties.getProperty("mongo_db", "qbwc"));
 	}
 	
-	public static ProxyFactory getFactory() {
+	public static DBProxyFactory getFactory() {
 		if (factory == null) {
-			factory = new ProxyFactory();
+			factory = new DBProxyFactory();
 		}
 		return factory;
 	}
 	
-	public AccountProxy getAccounts() {
+	public DBAccountProxy getAccounts() {
 		MongoCollection<Document> collection = getFactory().database.getCollection("accounts");
 		if (collection == null) {
 			getFactory().database.createCollection("accounts");
 			collection = getFactory().database.getCollection("accounts");
 		}
-		return new AccountProxy(collection);
+		return new DBAccountProxy(collection);
 	}
 	
-	public RequestProxy getRequests() {
+	public DBRequestProxy getRequests() {
 		MongoCollection<Document> collection = getFactory().database.getCollection("requests");
 		if (collection == null) {
 			getFactory().database.createCollection("requests");
 			collection = getFactory().database.getCollection("requests");
 		}
-		return new RequestProxy(collection);
+		return new DBRequestProxy(collection);
 	}
 	
-	public ResponseProxy getResponses() {
+	public DBResponseProxy getResponses() {
 		MongoCollection<Document> collection = getFactory().database.getCollection("responses");
 		if (collection == null) {
 			getFactory().database.createCollection("responses");
 			collection = getFactory().database.getCollection("responses");
 		}
-		return new ResponseProxy(collection);
+		return new DBResponseProxy(collection);
 	}
 }

@@ -9,7 +9,7 @@ import org.bson.Document;
  * @author dillon
  *
  */
-public interface ProxyInterface {
+public interface DBProxyInterface {
 
 	public Document getDocument(Document document);
 	
@@ -20,4 +20,6 @@ public interface ProxyInterface {
 	public boolean createDocument(Document document);
 	
 	public Document getLastDocument();
+	
+	public long getCollectionSize();
 }

@@ -5,4 +5,4 @@
  * @author dillon
  *
  */
-package com.dsoft.qbwcwebapp.crypto;
+package com.dsoft.qbwcwebapp.security;

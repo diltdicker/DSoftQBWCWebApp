@@ -11,11 +11,11 @@ import com.mongodb.client.MongoCollection;
  * @author dillon
  *
  */
-public class RequestProxy implements ProxyInterface {
+public class DBAccountProxy implements DBProxyInterface {
 
 	private MongoCollection<Document> collection;
 	
-	public RequestProxy(MongoCollection<Document> collection) {
+	public DBAccountProxy(MongoCollection<Document> collection) {
 		this.collection = collection;
 	}
 
@@ -47,5 +47,10 @@ public class RequestProxy implements ProxyInterface {
 	public Document getLastDocument() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public long getCollectionSize() {
+		return collection.countDocuments();
 	}
 }
