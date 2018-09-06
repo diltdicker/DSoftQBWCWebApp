@@ -15,7 +15,7 @@ public interface DBProxyInterface {
 	
 	public void deleteDocument(Document document);
 	
-	public boolean updateDocument(Document document);
+	public void updateDocument(Document document, Document updatedDocument);
 	
 	public boolean createDocument(Document document);
 	

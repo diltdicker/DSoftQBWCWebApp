@@ -32,12 +32,6 @@ public class DBResponseProxy implements DBProxyInterface {
 	}
 
 	@Override
-	public boolean updateDocument(Document document) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public boolean createDocument(Document document) {
 		// TODO Auto-generated method stub
 		return false;
@@ -52,5 +46,10 @@ public class DBResponseProxy implements DBProxyInterface {
 	@Override
 	public long getCollectionSize() {
 		return collection.countDocuments();
+	}
+
+	@Override
+	public void updateDocument(Document document, Document updatedDocument) {
+		// TODO Auto-generated method stub
 	}
 }

@@ -5,6 +5,7 @@ package com.dsoft.qbwcwebapp.db;
 
 import org.bson.Document;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 
 /**
@@ -21,20 +22,14 @@ public class DBRequestProxy implements DBProxyInterface {
 
 	@Override
 	public Document getDocument(Document document) {
-		// TODO Auto-generated method stub
-		return null;
+		FindIterable<Document> iterable = collection.find(document);
+		return iterable.first();
 	}
 
 	@Override
 	public void deleteDocument(Document document) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public boolean updateDocument(Document document) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
@@ -52,5 +47,10 @@ public class DBRequestProxy implements DBProxyInterface {
 	@Override
 	public long getCollectionSize() {
 		return collection.countDocuments();
+	}
+
+	@Override
+	public void updateDocument(Document document, Document updatedDocument) {
+		// TODO Auto-generated method stub
 	}
 }
