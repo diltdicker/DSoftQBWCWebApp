@@ -6,6 +6,11 @@
  */
 package com.dickersonsoftware.intuit;
 
+import com.dsoft.qbwcwebapp.db.DBProxyFactory;
+import com.dsoft.qbwcwebapp.model.Account;
+import com.dsoft.qbwcwebapp.security.Crypto;
+import org.bson.Document;
+
 /**
  *  DSoftQBWCSoapServiceSkeleton java skeleton for the axisService
  */
@@ -41,6 +46,9 @@ public class DSoftQBWCSoapServiceSkeleton
 
         com.intuit.developer.SendRequestXMLResponseDocument responseDocument = com.intuit.developer.SendRequestXMLResponseDocument.Factory.newInstance();
         com.intuit.developer.SendRequestXMLResponseDocument.SendRequestXMLResponse response = responseDocument.addNewSendRequestXMLResponse();
+
+
+
         response.setSendRequestXMLResult("");
         return responseDocument;
     }
@@ -93,7 +101,20 @@ public class DSoftQBWCSoapServiceSkeleton
         com.intuit.developer.AuthenticateResponseDocument responseDocument = com.intuit.developer.AuthenticateResponseDocument.Factory.newInstance();
         com.intuit.developer.AuthenticateResponseDocument.AuthenticateResponse response = responseDocument.addNewAuthenticateResponse();
         com.intuit.developer.ArrayOfString array = com.intuit.developer.ArrayOfString.Factory.newInstance();
-        array.setStringArray(new String[] { java.util.UUID.randomUUID().toString(), ""});
+        String username = authenticate8.getAuthenticate().getStrUserName();
+        String password = authenticate8.getAuthenticate().getStrPassword();
+        Document accountDocument = DBProxyFactory.getFactory().getAccounts().getDocument(new Document().append("username", username));
+        if (accountDocument != null) {
+            Account account = new Account(accountDocument);
+            if (Crypto.authenticate(account.getPasshash(), password)) {
+                //TODO check for 1+ requests else return none
+                array.setStringArray(new String[] { account.getTicket(), ""});
+            } else {
+                array.setStringArray(new String[] { "nvu", ""});
+            }
+        } else {
+            array.setStringArray(new String[] { "nvu", ""});
+        }
         response.setAuthenticateResult(array);
         return responseDocument;
     }

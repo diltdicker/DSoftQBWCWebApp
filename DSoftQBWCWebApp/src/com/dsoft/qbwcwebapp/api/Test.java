@@ -11,6 +11,9 @@ import javax.ws.rs.core.Response;
 
 import org.bson.Document;
 
+import com.dsoft.qbwcwebapp.db.DBProxyFactory;
+import com.dsoft.qbwcwebapp.security.Crypto;
+
 /**
  * @author dillon
  *
@@ -21,7 +24,9 @@ public class Test {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getTest() {
-		return Response.ok(new Document().append("hello", "world").toJson()).build();
-//		return Response.ok(new Document().append("hello", new Document().append("im_sorry", "dave")).toJson()).build();
+		Document doc = new Document().append("result", Crypto.authenticate(DBProxyFactory.getFactory()
+				.getAccounts().getDocument(new Document().append("username", "debug")).getString("passhash"), "password"));
+//		return Response.ok(new Document().append("hello", "world").toJson()).build();
+		return Response.ok(doc.toJson()).build();
 	}
 }

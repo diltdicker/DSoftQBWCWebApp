@@ -12,7 +12,7 @@
     <property name="classes" value="${build}/classes"/>
     <property name="lib" value="${build}/lib"/>
     <property name="resources" value="${project.base.dir}/resources"/>
-    <property name="added.lib.dir" value="${project.base.dir}/../../lib"/>
+    <property name="added.lib.dir" value="${project.base.dir}/../lib"/>
     <property value="XBeans-packaged.jar" name="xbeans.packaged.jar.name"/>
     <property value="" name="jars.ok"/>
     <path id="axis2.class.path">
