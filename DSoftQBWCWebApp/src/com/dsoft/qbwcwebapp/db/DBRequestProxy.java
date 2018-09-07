@@ -38,17 +38,21 @@ public class DBRequestProxy implements DBProxyInterface {
 
 	@Override
 	public boolean createDocument(Document document) {
-		if (document.containsKey("reqID")) {
-			if (getDocument(new Document().append("reqID", document.getLong("reqID"))) == null) {
+		if (document.containsKey("ticket")) {
+			if (document.containsKey("reqID")) {
+				if (getDocument(new Document().append("reqID", document.getLong("reqID")).append("ticket", document.getString("ticket"))) == null) {
+					collection.insertOne(document);
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				document.put("reqID", getNewestID(new Document().append("ticket", document.getString("ticket"))) + 1);
 				collection.insertOne(document);
 				return true;
-			} else {
-				return false;
 			}
 		} else {
-			document.put("reqID", getNewestID(new Document().append("ticket", document.getString("ticket"))) + 1);
-			collection.insertOne(document);
-			return true;
+			return false;
 		}
 	}
 

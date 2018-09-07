@@ -8,6 +8,8 @@ package com.dickersonsoftware.intuit;
 
 import com.dsoft.qbwcwebapp.db.DBProxyFactory;
 import com.dsoft.qbwcwebapp.model.Account;
+import com.dsoft.qbwcwebapp.model.Request;
+import com.dsoft.qbwcwebapp.model.Response;
 import com.dsoft.qbwcwebapp.security.Crypto;
 import org.bson.Document;
 
@@ -47,9 +49,13 @@ public class DSoftQBWCSoapServiceSkeleton
         com.intuit.developer.SendRequestXMLResponseDocument responseDocument = com.intuit.developer.SendRequestXMLResponseDocument.Factory.newInstance();
         com.intuit.developer.SendRequestXMLResponseDocument.SendRequestXMLResponse response = responseDocument.addNewSendRequestXMLResponse();
 
-
-
-        response.setSendRequestXMLResult("");
+        Request request = RequestManager.getRequestManager().getRequestQueue(sendRequestXML2.getSendRequestXML().getTicket()).nextRequest();
+        String xml = request.buildXML();
+        if (xml != null) {
+            response.setSendRequestXMLResult(xml);
+        } else {
+            response.setSendRequestXMLResult("");
+        }
         return responseDocument;
     }
 
@@ -107,8 +113,13 @@ public class DSoftQBWCSoapServiceSkeleton
         if (accountDocument != null) {
             Account account = new Account(accountDocument);
             if (Crypto.authenticate(account.getPasshash(), password)) {
-                //TODO check for 1+ requests else return none
-                array.setStringArray(new String[] { account.getTicket(), ""});
+                RequestManager.getRequestManager().createRequestQueue(account.getTicket(), DBProxyFactory.getFactory()
+                        .getRequests().getAllRequests(new Document().append("ticket", account.getTicket())));
+                if (RequestManager.getRequestManager().getRequestQueue(account.getTicket()).getQueueSize() > 0) {
+                    array.setStringArray(new String[] { account.getTicket(), ""});
+                } else {
+                    array.setStringArray(new String[] { "none", ""});
+                }
             } else {
                 array.setStringArray(new String[] { "nvu", ""});
             }
@@ -132,7 +143,24 @@ public class DSoftQBWCSoapServiceSkeleton
 
         com.intuit.developer.ReceiveResponseXMLResponseDocument responseDocument = com.intuit.developer.ReceiveResponseXMLResponseDocument.Factory.newInstance();
         com.intuit.developer.ReceiveResponseXMLResponseDocument.ReceiveResponseXMLResponse response = responseDocument.addNewReceiveResponseXMLResponse();
-        response.setReceiveResponseXMLResult(100);
+
+        Request request = RequestManager.getRequestManager().getRequestQueue(receiveResponseXML10.getReceiveResponseXML()
+                .getTicket()).getRequest(RequestManager.getRequestManager().getRequestQueue(receiveResponseXML10.getReceiveResponseXML()
+                .getTicket()).getIndex() - 1);
+
+        String responseStr = receiveResponseXML10.getReceiveResponseXML().getResponse();
+        Response response1;
+        if (responseStr != null) {
+            response1 = new Response(request.getTicket(), responseStr, request.getReqID());
+        } else {
+            response1 = new Response(request.getTicket(), receiveResponseXML10.getReceiveResponseXML().getHresult() +
+                    " - " + receiveResponseXML10.getReceiveResponseXML().getMessage(), request.getReqID());
+        }
+        DBProxyFactory.getFactory().getResponses().createDocument(response1.toDocument());
+
+        DBProxyFactory.getFactory().getRequests().deleteDocument(new Document().append("ticket",
+                receiveResponseXML10.getReceiveResponseXML().getTicket()).append("reqID", request.getReqID()));
+        response.setReceiveResponseXMLResult(RequestManager.getRequestManager().getRequestQueue(receiveResponseXML10.getReceiveResponseXML().getTicket()).getPercentComplete());
         return responseDocument;
     }
 

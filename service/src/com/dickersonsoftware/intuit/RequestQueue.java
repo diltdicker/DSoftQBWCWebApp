@@ -17,9 +17,18 @@ public class RequestQueue {
     }
 
     public String nextXMLRequest() {
-        if (index != requests.size()) {
+        if (index > -1 && index < requests.size()) {
             index++;
             return requests.get(index - 1).buildXML();
+        } else {
+            return null;
+        }
+    }
+
+    public Request nextRequest() {
+        if (index > -1 && index < requests.size()) {
+            index++;
+            return requests.get(index - 1);
         } else {
             return null;
         }
@@ -29,6 +38,9 @@ public class RequestQueue {
         double index = this.index;
         double length = requests.size();
         double result = (index / length) * 100;
+        if (result > 100) {
+            result = 100;
+        }
         return  (int) result;
     }
 
@@ -38,6 +50,10 @@ public class RequestQueue {
 
     public int getIndex() {
         return index;
+    }
+
+    public int getQueueSize() {
+        return requests.size();
     }
 
     public Request getRequest(int index) {

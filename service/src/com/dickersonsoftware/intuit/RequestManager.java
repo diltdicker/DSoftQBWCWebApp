@@ -20,10 +20,10 @@ public class RequestManager {
         return requestManager;
     }
 
-    public RequestQueue getRequestQueue(String token) {
+    public RequestQueue getRequestQueue(String ticket) {
         RequestQueue queue = null;
         for (int i = 0; i < requestBin.size(); i++) {
-            if (requestBin.get(i).getTicket().equals(token)) {
+            if (requestBin.get(i).getTicket().equals(ticket)) {
                 queue = requestBin.get(i);
                 break;
             }
@@ -31,24 +31,24 @@ public class RequestManager {
         return queue;
     }
 
-    public void removeRequestQueue(String token) {
+    public void removeRequestQueue(String ticket) {
         RequestQueue queue = null;
         for (int i = 0; i < requestBin.size(); i++) {
-            if (requestBin.get(i).getTicket().equals(token)) {
+            if (requestBin.get(i).getTicket().equals(ticket)) {
                 requestBin.remove(i);
                 break;
             }
         }
     }
 
-    public void createRequestQueue(String token, ArrayList<Request> requests) {
+    public void createRequestQueue(String ticket, ArrayList<Request> requests) {
         RequestQueue queue = null;
         for (int i = 0; i < requestBin.size(); i++) {
-            if (requestBin.get(i).getTicket().equals(token)) {
+            if (requestBin.get(i).getTicket().equals(ticket)) {
                 requestBin.remove(i);
                 break;
             }
         }
-        requestBin.add(new RequestQueue(token, requests));
+        requestBin.add(new RequestQueue(ticket, requests));
     }
 }
