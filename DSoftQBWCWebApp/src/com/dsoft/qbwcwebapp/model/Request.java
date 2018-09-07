@@ -14,6 +14,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.dsoft.qbwcwebapp.exception.PartialNullException;
+
 /**
  * @author dillon
  *
@@ -24,12 +26,43 @@ public class Request {
 	private org.bson.Document request;
 	private long reqID;
 
+	public Request(String ticket, org.bson.Document request) {
+		this.request = request;
+		this.ticket = ticket;
+		this.reqID = -1;
+		if (request == null || ticket == null) {
+			throw new PartialNullException();
+		}
+	}
+	
 	public Request(String ticket, org.bson.Document request, long reqID) {
-		
+		this.request = request;
+		this.ticket = ticket;
+		this.reqID = reqID;
+		if (request == null || ticket == null) {
+			throw new PartialNullException();
+		}
 	}
 	
 	public Request(org.bson.Document document) {
-		
+		if (document.containsKey("request")) {
+			request = (org.bson.Document) document.get("request");
+		} else {
+			request = new org.bson.Document();
+		}
+		if (document.containsKey("ticket")) {
+			ticket = document.getString("ticket");
+		} else {
+			ticket = null;
+		}
+		if (document.containsKey("reqID")) {
+			reqID = document.getLong("reqID");
+		} else {
+			reqID = -1;
+		}
+		if (request == null || ticket == null) {
+			throw new PartialNullException();
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -90,5 +123,55 @@ public class Request {
 				element.addContent(obj.toString());
 			}
 		}
+	}
+
+	/**
+	 * @return the ticket
+	 */
+	public String getTicket() {
+		return ticket;
+	}
+
+	/**
+	 * @param ticket the ticket to set
+	 */
+	public void setTicket(String ticket) {
+		this.ticket = ticket;
+	}
+
+	/**
+	 * @return the request
+	 */
+	public org.bson.Document getRequest() {
+		return request;
+	}
+
+	/**
+	 * @param request the request to set
+	 */
+	public void setRequest(org.bson.Document request) {
+		this.request = request;
+	}
+
+	/**
+	 * @return the reqID
+	 */
+	public long getReqID() {
+		return reqID;
+	}
+
+	/**
+	 * @param reqID the reqID to set
+	 */
+	public void setReqID(long reqID) {
+		this.reqID = reqID;
+	}
+	
+	public org.bson.Document toDocument() {
+		org.bson.Document requestDocument = new org.bson.Document().append("ticket", ticket).append("request", request);
+		if (reqID > -1) {
+			requestDocument.put("reqID", reqID);
+		}
+		return requestDocument;
 	}
 }

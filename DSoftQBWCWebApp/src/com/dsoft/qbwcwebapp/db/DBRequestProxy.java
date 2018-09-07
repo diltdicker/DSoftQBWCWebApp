@@ -23,8 +23,12 @@ public class DBRequestProxy implements DBProxyInterface {
 
 	@Override
 	public Document getDocument(Document document) {
-		FindIterable<Document> iterable = collection.find(document);
-		return iterable.first();
+		if (document.containsKey("ticket") && document.containsKey("reqID")) {
+			FindIterable<Document> iterable = collection.find(document);
+			return iterable.first();
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -42,7 +46,7 @@ public class DBRequestProxy implements DBProxyInterface {
 				return false;
 			}
 		} else {
-			document.put("reqID", getNewestID());
+			document.put("reqID", getNewestID(new Document().append("ticket", document.getString("ticket"))) + 1);
 			collection.insertOne(document);
 			return true;
 		}
@@ -63,9 +67,9 @@ public class DBRequestProxy implements DBProxyInterface {
 		collection.findOneAndReplace(document, updatedDocument);
 	}
 	
-	public long getNewestID() {
+	public long getNewestID(Document document) {
 		long id = -1;
-		MongoCursor<Document> cursor = collection.find().iterator();
+		MongoCursor<Document> cursor = collection.find(document).iterator();
 		while (cursor.hasNext()) {
 			Document tmpDocument = cursor.next();
 			if (tmpDocument.getLong("reqID") > id) {

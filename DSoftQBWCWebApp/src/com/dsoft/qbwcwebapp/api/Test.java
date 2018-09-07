@@ -22,5 +22,6 @@ public class Test {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getTest() {
 		return Response.ok(new Document().append("hello", "world").toJson()).build();
+//		return Response.ok(new Document().append("hello", new Document().append("im_sorry", "dave")).toJson()).build();
 	}
 }

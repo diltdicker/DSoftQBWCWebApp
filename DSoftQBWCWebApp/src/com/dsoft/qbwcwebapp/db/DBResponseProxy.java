@@ -42,7 +42,7 @@ public class DBResponseProxy implements DBProxyInterface {
 				return false;
 			}
 		} else {
-			document.put("reqID", getNewestID());
+			document.put("reqID", getNewestID() + 1);
 			collection.insertOne(document);
 			return true;
 		}

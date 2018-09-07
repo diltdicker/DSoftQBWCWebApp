@@ -75,4 +75,9 @@ public class DBProxyFactory {
 		}
 		return new DBResponseProxy(collection);
 	}
+	
+	public void CloseDBConnection() {
+		client.close();
+		factory = null;
+	}
 }
