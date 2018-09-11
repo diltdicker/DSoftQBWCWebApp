@@ -27,14 +27,14 @@ public class DBProxyFactory {
 	
 	private DBProxyFactory() {
 		Properties properties = new Properties();
-		String configfile = "config.properties";
-		InputStream stream = getClass().getClassLoader().getResourceAsStream(configfile);
+		String configFile = "config.properties";
+		InputStream stream = getClass().getClassLoader().getResourceAsStream(configFile);
 		try {
 			properties.load(stream);
 			stream.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new MissingConfigException("missing file " + configfile);
+			throw new MissingConfigException("missing file " + configFile);
 		}
 		String mongoURL = "mongodb://" + properties.getProperty("mongo_host", "localhost") +
 				":" + properties.getProperty("mongo_port", "27017");
