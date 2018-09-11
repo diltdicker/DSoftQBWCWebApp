@@ -9,6 +9,11 @@ package com.dsoft.qbwcwebapp.exception;
  */
 public class PartialNullException extends NullPointerException {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public PartialNullException() {
 		super();
 	}

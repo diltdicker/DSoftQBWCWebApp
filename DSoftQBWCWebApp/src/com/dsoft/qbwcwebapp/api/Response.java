@@ -19,8 +19,9 @@ import javax.ws.rs.core.Response.Status;
 public class Response {
 
 	@GET
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public javax.ws.rs.core.Response getResponse(@PathParam("username") String username, @PathParam("reqid") String reqIDStr) {
+		
 		return javax.ws.rs.core.Response.ok(username + " a test").status(Status.OK).build();
 	}
 	

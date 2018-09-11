@@ -23,6 +23,17 @@ import com.dsoft.qbwcwebapp.model.Account;
 @Path("/request")
 public class Request {
 	
+	/**
+	 * Request end-point for qbxml requests
+	 * 
+	 * @param json - the qbxml request in json format
+	 * format:
+	 * 	{
+	 * 		request: {qbxml tree here}
+	 * 	}
+	 * @param username - the username of the client.
+	 * @return - if successful returns the request as it is stored in the database, else returns a 4xx error.
+	 */
 	@POST
 	@Path("/{username}")
 	@Consumes(MediaType.APPLICATION_JSON)
