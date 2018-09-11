@@ -84,6 +84,6 @@ public class Account {
 		root.addContent(new Element("Style").addContent("DocWrapped"));
 		qwc.setRootElement(root);
 		XMLOutputter outputter = new XMLOutputter();
-		return Response.ok(outputter.outputString(qwc), MediaType.APPLICATION_XML).header("Content-Disposition", "attachment; filename=DsoftQWC.qwc").build();
+		return Response.ok(outputter.outputString(qwc), MediaType.APPLICATION_XML).header("Content-Disposition", "attachment; filename=DSoftQWC.qwc").build();
 	}
 }
