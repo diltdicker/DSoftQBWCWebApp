@@ -12,7 +12,10 @@ import javax.ws.rs.core.Response.Status;
 
 import org.bson.Document;
 
+import com.dsoft.qbwcwebapp.db.DBAccountProxy;
 import com.dsoft.qbwcwebapp.db.DBProxyFactory;
+import com.dsoft.qbwcwebapp.db.DBRequestProxy;
+import com.dsoft.qbwcwebapp.db.DBResponseProxy;
 import com.dsoft.qbwcwebapp.model.Account;
 
 import net.sf.json.JSON;
@@ -27,10 +30,14 @@ public class Response {
 
 	@GET
 	public javax.ws.rs.core.Response getResponse(@PathParam("username") String username, @PathParam("reqid") String reqIDStr) {
-		Document accountDocument = DBProxyFactory.getFactory().getAccounts().getDocument(new Document().append("username", username));
+		DBAccountProxy accountProxy = DBProxyFactory.getAccounts();
+		Document accountDocument = accountProxy.getDocument(new Document().append("username", username));
+		accountProxy.closeDBConnection();
 		if (accountDocument != null) {
 			Account account = new Account(accountDocument);
-			Document document = DBProxyFactory.getFactory().getResponses().getDocument(new Document().append("ticket", account.getTicket()).append("reqID", reqIDStr));
+			DBResponseProxy responseProxy = DBProxyFactory.getResponses();
+			Document document = responseProxy.getDocument(new Document().append("ticket", account.getTicket()).append("reqID", reqIDStr));
+			responseProxy.closeDBConnection();
 			if (document != null) {
 				com.dsoft.qbwcwebapp.model.Response response = new com.dsoft.qbwcwebapp.model.Response(document);
 				return javax.ws.rs.core.Response.ok(response.toDocument().toJson(), MediaType.APPLICATION_JSON).status(Status.OK).build();
@@ -44,10 +51,14 @@ public class Response {
 	
 	@DELETE
 	public javax.ws.rs.core.Response deleteResponse(@PathParam("username") String username, @PathParam("reqid") String reqIDStr) {
-		Document document = DBProxyFactory.getFactory().getAccounts().getDocument(new Document().append("username", username));
+		DBAccountProxy accountProxy = DBProxyFactory.getAccounts();
+		Document document = accountProxy.getDocument(new Document().append("username", username));
+		accountProxy.closeDBConnection();
 		if (document != null) {
 			Account account = new Account(document);
-			DBProxyFactory.getFactory().getResponses().deleteDocument(new Document().append("ticket", account.getTicket()).append("reqID", reqIDStr));
+			DBResponseProxy responseProxy = DBProxyFactory.getResponses();
+			responseProxy.deleteDocument(new Document().append("ticket", account.getTicket()).append("reqID", reqIDStr));
+			responseProxy.closeDBConnection();
 			return javax.ws.rs.core.Response.noContent().status(Status.OK).build();
 		} else {
 			return javax.ws.rs.core.Response.noContent().status(Status.UNAUTHORIZED).build();

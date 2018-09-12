@@ -19,65 +19,74 @@ import com.mongodb.client.MongoDatabase;
  * @author dillon
  *
  */
-public class DBProxyFactory {
+public interface DBProxyFactory {
+	
+	public static DBAccountProxy getAccounts() {
+		DBConnection connection = new DBConnection();
+		MongoCollection<Document> collection = connection.getDatabase().getCollection("accounts");
+		if (collection == null) {
+			connection.getDatabase().createCollection("accounts");
+			collection = connection.getDatabase().getCollection("accounts");
+		}
+		return new DBAccountProxy(collection, connection);
+	}
+	
+	public static DBRequestProxy getRequests() {
+		DBConnection connection = new DBConnection();
+		MongoCollection<Document> collection = connection.getDatabase().getCollection("requests");
+		if (collection == null) {
+			connection.getDatabase().createCollection("requests");
+			collection = connection.getDatabase().getCollection("requests");
+		}
+		return new DBRequestProxy(collection, connection);
+	}
+	
+	public static DBResponseProxy getResponses() {
+		DBConnection connection = new DBConnection();
+		MongoCollection<Document> collection = connection.getDatabase().getCollection("responses");
+		if (collection == null) {
+			connection.getDatabase().createCollection("responses");
+			collection = connection.getDatabase().getCollection("responses");
+		}
+		return new DBResponseProxy(collection, connection);
+	}
+	
+	public class DBConnection {
+		private MongoClient client;
+		private MongoDatabase database;
+		
+		public DBConnection() {
+			Properties properties = new Properties();
+			String configFile = "config.properties";
+			InputStream stream = getClass().getClassLoader().getResourceAsStream(configFile);
+			try {
+				properties.load(stream);
+				stream.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+				throw new MissingConfigException("missing file " + configFile);
+			}
+			String mongoURL = "mongodb://" + properties.getProperty("mongo_host", "localhost") +
+					":" + properties.getProperty("mongo_port", "27017");
+			client = MongoClients.create(mongoURL);
+			database = client.getDatabase(properties.getProperty("mongo_db", "qbwc"));
+		}
 
-	private static DBProxyFactory factory = null;
-	private MongoClient client = null;
-	private MongoDatabase database = null;
-	
-	private DBProxyFactory() {
-		Properties properties = new Properties();
-		String configfile = "config.properties";
-		InputStream stream = getClass().getClassLoader().getResourceAsStream(configfile);
-		try {
-			properties.load(stream);
-			stream.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new MissingConfigException("missing file " + configfile);
+		/**
+		 * @return the client
+		 */
+		public MongoClient getClient() {
+			return client;
 		}
-		String mongoURL = "mongodb://" + properties.getProperty("mongo_host", "localhost") +
-				":" + properties.getProperty("mongo_port", "27017");
-		client = MongoClients.create(mongoURL);
-		database = client.getDatabase(properties.getProperty("mongo_db", "qbwc"));
-	}
-	
-	public static DBProxyFactory getFactory() {
-		if (factory == null) {
-			factory = new DBProxyFactory();
+
+		/**
+		 * @return the database
+		 */
+		public MongoDatabase getDatabase() {
+			return database;
 		}
-		return factory;
-	}
-	
-	public DBAccountProxy getAccounts() {
-		MongoCollection<Document> collection = getFactory().database.getCollection("accounts");
-		if (collection == null) {
-			getFactory().database.createCollection("accounts");
-			collection = getFactory().database.getCollection("accounts");
-		}
-		return new DBAccountProxy(collection);
-	}
-	
-	public DBRequestProxy getRequests() {
-		MongoCollection<Document> collection = getFactory().database.getCollection("requests");
-		if (collection == null) {
-			getFactory().database.createCollection("requests");
-			collection = getFactory().database.getCollection("requests");
-		}
-		return new DBRequestProxy(collection);
-	}
-	
-	public DBResponseProxy getResponses() {
-		MongoCollection<Document> collection = getFactory().database.getCollection("responses");
-		if (collection == null) {
-			getFactory().database.createCollection("responses");
-			collection = getFactory().database.getCollection("responses");
-		}
-		return new DBResponseProxy(collection);
-	}
-	
-	public void CloseDBConnection() {
-		client.close();
-		factory = null;
+		
+		
+		
 	}
 }

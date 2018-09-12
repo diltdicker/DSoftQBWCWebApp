@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import org.bson.Document;
 
+import com.dsoft.qbwcwebapp.db.DBProxyFactory.DBConnection;
 import com.dsoft.qbwcwebapp.model.Request;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -18,10 +19,12 @@ import com.mongodb.client.MongoCursor;
  */
 public class DBRequestProxy implements DBProxyInterface {
 
-private MongoCollection<Document> collection;
+	private MongoCollection<Document> collection;
+	private DBConnection connection;
 	
-	public DBRequestProxy(MongoCollection<Document> collection) {
+	public DBRequestProxy(MongoCollection<Document> collection, DBConnection connection) {
 		this.collection = collection;
+		this.connection = connection;
 	}
 
 	@Override
@@ -80,5 +83,10 @@ private MongoCollection<Document> collection;
 		}
 		cursor.close();
 		return requestList;
+	}
+
+	@Override
+	public void closeDBConnection() {
+		connection.getClient().close();
 	}
 }

@@ -5,6 +5,7 @@ package com.dsoft.qbwcwebapp.db;
 
 import org.bson.Document;
 
+import com.dsoft.qbwcwebapp.db.DBProxyFactory.DBConnection;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 
@@ -15,9 +16,11 @@ import com.mongodb.client.MongoCollection;
 public class DBAccountProxy implements DBProxyInterface {
 
 	private MongoCollection<Document> collection;
+	private DBConnection connection;
 	
-	public DBAccountProxy(MongoCollection<Document> collection) {
+	public DBAccountProxy(MongoCollection<Document> collection, DBConnection connection) {
 		this.collection = collection;
+		this.connection = connection;
 	}
 
 	@Override
@@ -59,5 +62,10 @@ public class DBAccountProxy implements DBProxyInterface {
 	@Override
 	public void updateDocument(Document document, Document updatedDocument) {
 		collection.findOneAndReplace(document, updatedDocument);
+	}
+
+	@Override
+	public void closeDBConnection() {
+		connection.getClient().close();
 	}
 }

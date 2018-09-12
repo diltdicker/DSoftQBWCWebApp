@@ -20,7 +20,9 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
+import com.dsoft.qbwcwebapp.db.DBAccountProxy;
 import com.dsoft.qbwcwebapp.db.DBProxyFactory;
+import com.dsoft.qbwcwebapp.db.DBRequestProxy;
 import com.dsoft.qbwcwebapp.model.Account;
 
 /**
@@ -41,7 +43,9 @@ public class Request {
 	@Path("/{username}")
 	@Consumes(MediaType.APPLICATION_XML)
 	public Response postRequest(String xml, @PathParam("username") String username) {
-		Document accountDocument = DBProxyFactory.getFactory().getAccounts().getDocument(new Document().append("username", username));
+		DBAccountProxy accountProxy = DBProxyFactory.getAccounts();
+		Document accountDocument = accountProxy.getDocument(new Document().append("username", username));
+		accountProxy.closeDBConnection();
 		if (accountDocument != null) {
 			boolean error = false;
 			org.jdom2.Document xmlDoc = null;
@@ -54,7 +58,10 @@ public class Request {
 				Account account = new Account(accountDocument);
 				XMLOutputter outputter = new XMLOutputter(Format.getCompactFormat());
 				com.dsoft.qbwcwebapp.model.Request request = new com.dsoft.qbwcwebapp.model.Request(account.getTicket(), outputter.outputString(xmlDoc));
-				if (DBProxyFactory.getFactory().getRequests().createDocument(request.toDocument())) {
+				DBRequestProxy requestProxy = DBProxyFactory.getRequests();
+				boolean created = requestProxy.createDocument(request.toDocument());
+				requestProxy.closeDBConnection();
+				if (created) {
 					return Response.ok(request.toDocument().toJson(), MediaType.APPLICATION_JSON).status(Status.CREATED).build();
 				} else {
 					return Response.noContent().status(Status.CONFLICT).build();

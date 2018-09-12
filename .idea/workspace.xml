@@ -6,17 +6,18 @@
       <change beforePath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/api/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/api/Account.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/api/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/api/Request.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/api/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/api/Response.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/api/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/api/Test.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/db/DBAccountProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/db/DBAccountProxy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/model/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/model/Request.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/model/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/model/Response.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/build.xml" beforeDir="false" afterPath="$PROJECT_DIR$/service/build.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/db/DBProxyFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/db/DBProxyFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/db/DBProxyInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/db/DBProxyInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/db/DBRequestProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/db/DBRequestProxy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/db/DBResponseProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/db/DBResponseProxy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/src/com/dickersonsoftware/intuit/DSoftQBWCSoapServiceSkeleton.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/com/dickersonsoftware/intuit/DSoftQBWCSoapServiceSkeleton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/com/dickersonsoftware/intuit/RequestQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/com/dickersonsoftware/intuit/RequestQueue.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBAccountProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBAccountProxy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBProxyFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBProxyFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBProxyInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBProxyInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBRequestProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBRequestProxy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBResponseProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBResponseProxy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/model/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/model/Request.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/model/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/model/Response.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -54,13 +55,13 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="4042" />
+          <entry key="java" value="4222" />
           <entry key="xml" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="4042" />
+          <entry key="JAVA" value="4222" />
           <entry key="XML" value="5" />
         </counts>
       </usages-collector>
@@ -68,11 +69,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/service/src/com/dickersonsoftware/intuit/DSoftQBWCSoapServiceSkeleton.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="502">
-              <caret line="241" column="56" selection-start-line="241" selection-start-column="56" selection-end-line="241" selection-end-column="56" />
+            <state relative-caret-position="577">
+              <caret line="84" column="44" selection-start-line="84" selection-start-column="44" selection-end-line="84" selection-end-column="44" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -80,13 +81,17 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBProxyFactory.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="285">
               <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#2487#2488#0" expanded="true" />
+                <element signature="e#2509#2510#0" expanded="true" />
+                <element signature="e#2587#2588#0" expanded="true" />
+                <element signature="e#2611#2612#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -95,8 +100,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBResponseProxy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="43" column="51" lean-forward="true" selection-start-line="43" selection-start-column="51" selection-end-line="43" selection-end-column="51" />
+            <state relative-caret-position="615">
+              <caret line="45" column="51" lean-forward="true" selection-start-line="45" selection-start-column="51" selection-end-line="45" selection-end-column="51" />
             </state>
           </provider>
         </entry>
@@ -145,14 +150,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBRequestProxy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-171">
-              <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="82" selection-end-column="5" />
-              <folding>
-                <element signature="e#1366#1367#0" expanded="true" />
-                <element signature="e#1413#1414#0" expanded="true" />
-                <element signature="e#1477#1478#0" expanded="true" />
-                <element signature="e#1526#1527#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="-51">
+              <caret line="21" column="4" selection-start-line="89" selection-start-column="38" selection-end-line="90" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -217,8 +216,8 @@
         <option value="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBRequestProxy.java" />
         <option value="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBResponseProxy.java" />
         <option value="$PROJECT_DIR$/service/src/com/dickersonsoftware/intuit/RequestQueue.java" />
-        <option value="$PROJECT_DIR$/service/src/com/dickersonsoftware/intuit/DSoftQBWCSoapServiceSkeleton.java" />
         <option value="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/model/Request.java" />
+        <option value="$PROJECT_DIR$/service/src/com/dickersonsoftware/intuit/DSoftQBWCSoapServiceSkeleton.java" />
       </list>
     </option>
   </component>
@@ -309,7 +308,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1536720785408" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1536724810623" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
@@ -460,21 +459,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBRequestProxy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-171">
-          <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="82" selection-end-column="5" />
-          <folding>
-            <element signature="e#1366#1367#0" expanded="true" />
-            <element signature="e#1413#1414#0" expanded="true" />
-            <element signature="e#1477#1478#0" expanded="true" />
-            <element signature="e#1526#1527#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-51">
+          <caret line="21" column="4" selection-start-line="89" selection-start-column="38" selection-end-line="90" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBResponseProxy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="43" column="51" lean-forward="true" selection-start-line="43" selection-start-column="51" selection-end-line="43" selection-end-column="51" />
+        <state relative-caret-position="615">
+          <caret line="45" column="51" lean-forward="true" selection-start-line="45" selection-start-column="51" selection-end-line="45" selection-end-column="51" />
         </state>
       </provider>
     </entry>
@@ -506,16 +499,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/service/src/com/dickersonsoftware/intuit/DSoftQBWCSoapServiceSkeleton.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="502">
-          <caret line="241" column="56" selection-start-line="241" selection-start-column="56" selection-end-line="241" selection-end-column="56" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/model/Request.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
@@ -530,6 +513,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2487#2488#0" expanded="true" />
+            <element signature="e#2509#2510#0" expanded="true" />
+            <element signature="e#2587#2588#0" expanded="true" />
+            <element signature="e#2611#2612#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service/src/com/dickersonsoftware/intuit/DSoftQBWCSoapServiceSkeleton.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="577">
+          <caret line="84" column="44" selection-start-line="84" selection-start-column="44" selection-end-line="84" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

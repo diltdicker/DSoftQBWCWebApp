@@ -38,7 +38,6 @@ public class Account {
 		Document document = Document.parse(json);
 		if (document != null && document.containsKey("username") && document.containsKey("password")) {
 			Document newAccount = new Document();
-			DBAccountProxy accountProxy = DBProxyFactory.getFactory().getAccounts();
 			try {
 				newAccount.put("username", (String) document.getString("username"));
 				newAccount.put("passhash", Crypto.initHash(document.getString("password")));
@@ -46,7 +45,10 @@ public class Account {
 				return Response.noContent().status(Status.BAD_REQUEST).build();
 			}
 			newAccount.put("ticket", UUID.randomUUID().toString());
-			if (accountProxy.createDocument(newAccount)) {
+			DBAccountProxy accountProxy = DBProxyFactory.getAccounts();
+			boolean created = accountProxy.createDocument(newAccount);
+			accountProxy.closeDBConnection();
+			if (created) {
 				return Response.noContent().status(Status.CREATED).build();
 			} else {
 				return Response.noContent().status(Status.CONFLICT).build();

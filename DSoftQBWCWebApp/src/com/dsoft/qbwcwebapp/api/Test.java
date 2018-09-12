@@ -24,9 +24,6 @@ public class Test {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getTest() {
-		Document doc = new Document().append("result", Crypto.authenticate(DBProxyFactory.getFactory()
-				.getAccounts().getDocument(new Document().append("username", "debug")).getString("passhash"), "password"));
-//		return Response.ok(new Document().append("hello", "world").toJson()).build();
-		return Response.ok(doc.toJson()).build();
+		return Response.ok(new Document().append("hello", "world").toJson()).build();
 	}
 }

@@ -22,4 +22,6 @@ public interface DBProxyInterface {
 	public Document getLastDocument(Document document);
 	
 	public long getCollectionSize(Document document);
+	
+	public void closeDBConnection();
 }
