@@ -3,11 +3,16 @@
  */
 package com.dsoft.qbwcwebapp.model;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.Iterator;
+import java.util.UUID;
 
 import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.json.JSONArray;
@@ -23,19 +28,19 @@ import com.dsoft.qbwcwebapp.exception.PartialNullException;
 public class Request {
 	
 	private String ticket;
-	private org.bson.Document request;
-	private long reqID;
+	private String request;
+	private String reqID;
 
-	public Request(String ticket, org.bson.Document request) {
+	public Request(String ticket, String request) {
 		this.request = request;
 		this.ticket = ticket;
-		this.reqID = -1;
+		this.reqID = UUID.randomUUID().toString();
 		if (request == null || ticket == null) {
 			throw new PartialNullException();
 		}
 	}
 	
-	public Request(String ticket, org.bson.Document request, long reqID) {
+	public Request(String ticket, String request, String reqID) {
 		this.request = request;
 		this.ticket = ticket;
 		this.reqID = reqID;
@@ -46,9 +51,9 @@ public class Request {
 	
 	public Request(org.bson.Document document) {
 		if (document.containsKey("request")) {
-			request = (org.bson.Document) document.get("request");
+			request = document.getString("request");
 		} else {
-			request = new org.bson.Document();
+			request = null;
 		}
 		if (document.containsKey("ticket")) {
 			ticket = document.getString("ticket");
@@ -56,72 +61,31 @@ public class Request {
 			ticket = null;
 		}
 		if (document.containsKey("reqID")) {
-			reqID = document.getLong("reqID");
+			reqID = document.getString("reqID");
 		} else {
-			reqID = -1;
+			reqID = UUID.randomUUID().toString();
 		}
 		if (request == null || ticket == null) {
 			throw new PartialNullException();
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
-	public String buildXML() {
-		JSONObject object = null;
-		try {
-			object = new JSONObject(request.toJson());
-		} catch (JSONException e1) {
-			e1.printStackTrace();
-		}
-		boolean error = false;
+	public String buildQBXML() {
+		Document qbxml = null;
 		final String XML_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 		final String QB_HEAER = "<?qbxml version=\"13.0\"?>";
-		Document xmlDocument = new Document();
-		Iterator<String> iterator = object.keys();
-		String rootKey = iterator.next();
-		while (iterator.hasNext()) {
-			iterator.next();
-		}
-		Element root = new Element(rootKey);
+		boolean error = false;
 		try {
-			object = object.getJSONObject(rootKey);
-		} catch (JSONException e) {
+			qbxml = new SAXBuilder().build(new StringReader(request));
+		} catch (JDOMException | IOException e) {
+			e.printStackTrace();
 			error = true;
 		}
-		recursiveJSONToXML(object, root);
-		xmlDocument.setRootElement(root);
-		XMLOutputter outputter = new XMLOutputter();
-		outputter.setFormat(Format.getCompactFormat().setOmitDeclaration(true));
+		XMLOutputter outputter = new XMLOutputter(Format.getCompactFormat());
 		if (!error) {
-			return XML_HEADER + QB_HEAER + outputter.outputString(xmlDocument);
+			return XML_HEADER + QB_HEAER + outputter.outputString(qbxml);
 		} else {
-			return null;
-		}
-	}
-	
-	@SuppressWarnings("unchecked")
-	public void recursiveJSONToXML(JSONObject object, Element parent) {
-		Iterator<String> iterator = object.keys();
-		while (iterator.hasNext()) {
-			String key = iterator.next();
-			Element element = new Element(key);
-			if (key.equalsIgnoreCase("QBXMLMsgsRq")) {
-				element.setAttribute(new Attribute("onError", "stopOnError"));
-			}
-			parent.addContent(element);
-			Object obj;
-			try {
-				obj = object.get(key);
-			} catch (JSONException e) {
-				obj = "Type Error";
-			}
-			if (obj instanceof JSONObject) {
-				recursiveJSONToXML((JSONObject)obj, element);
-			} else if (obj instanceof JSONArray) {
-				element.addContent("JSON Array not implemented");
-			} else {
-				element.addContent(obj.toString());
-			}
+			return "";
 		}
 	}
 
@@ -142,36 +106,26 @@ public class Request {
 	/**
 	 * @return the request
 	 */
-	public org.bson.Document getRequest() {
+	public String getRequest() {
 		return request;
 	}
 
 	/**
 	 * @param request the request to set
 	 */
-	public void setRequest(org.bson.Document request) {
+	public void setRequest(String request) {
 		this.request = request;
 	}
-
+	
 	/**
 	 * @return the reqID
 	 */
-	public long getReqID() {
+	public String getReqID() {
 		return reqID;
 	}
 
-	/**
-	 * @param reqID the reqID to set
-	 */
-	public void setReqID(long reqID) {
-		this.reqID = reqID;
-	}
-	
 	public org.bson.Document toDocument() {
 		org.bson.Document requestDocument = new org.bson.Document().append("ticket", ticket).append("request", request);
-		if (reqID > -1) {
-			requestDocument.put("reqID", reqID);
-		}
 		return requestDocument;
 	}
 }

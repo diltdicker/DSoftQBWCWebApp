@@ -23,8 +23,12 @@ public class DBResponseProxy implements DBProxyInterface {
 
 	@Override
 	public Document getDocument(Document document) {
-		FindIterable<Document> iterable = collection.find(document);
-		return iterable.first();
+        if (document.containsKey("ticket") && document.containsKey("reqID")) {
+            FindIterable<Document> iterable = collection.find(document);
+            return iterable.first();
+        } else {
+            return null;
+        }
 	}
 
 	@Override
@@ -36,16 +40,14 @@ public class DBResponseProxy implements DBProxyInterface {
 	public boolean createDocument(Document document) {
 		if (document.containsKey("ticket")) {
 			if (document.containsKey("reqID")) {
-				if (getDocument(new Document().append("reqID", document.getLong("reqID")).append("ticket", document.getString("ticket"))) == null) {
+				if (getDocument(new Document().append("reqID", document.getString("reqID")).append("ticket", document.getString("ticket"))) == null) {
 					collection.insertOne(document);
 					return true;
 				} else {
 					return false;
 				}
 			} else {
-				document.put("reqID", getNewestID() + 1);
-				collection.insertOne(document);
-				return true;
+				return false;
 			}
 		} else {
 			return false;
@@ -65,18 +67,5 @@ public class DBResponseProxy implements DBProxyInterface {
 	@Override
 	public void updateDocument(Document document, Document updatedDocument) {
 		collection.findOneAndReplace(document, updatedDocument);
-	}
-	
-	public long getNewestID() {
-		long id = -1;
-		MongoCursor<Document> cursor = collection.find().iterator();
-		while (cursor.hasNext()) {
-			Document tmpDocument = cursor.next();
-			if (tmpDocument.getLong("reqID") > id) {
-				id = tmpDocument.getLong("reqID");
-			}
-		}
-		cursor.close();
-		return id;
 	}
 }

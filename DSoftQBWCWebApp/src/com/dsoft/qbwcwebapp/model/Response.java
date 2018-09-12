@@ -15,13 +15,13 @@ public class Response {
 
 	private String ticket;
 	private String response;
-	private long reqID;
+	private String reqID;
 	
-	public Response(String ticket, String response, long reqID) {
+	public Response(String ticket, String response, String reqID) {
 		this.ticket = ticket;
 		this.response = response;
 		this.reqID = reqID;
-		if (this.ticket == null || this.response == null) {
+		if (this.ticket == null || this.response == null || this.reqID == null) {
 			throw new PartialNullException();
 		}
 	}
@@ -30,7 +30,7 @@ public class Response {
 		if (document.containsKey("ticket") && document.containsKey("response") && document.containsKey("reqID")) {
 			this.ticket = document.getString("ticket");
 			this.response = document.getString("response");
-			this.reqID = document.getLong("reqID");
+			this.reqID = document.getString("reqID");
 		} else {
 			throw new PartialNullException();
 		}
@@ -49,14 +49,14 @@ public class Response {
 	public String getResponse() {
 		return response;
 	}
-
+	
 	/**
 	 * @return the reqID
 	 */
-	public long getReqID() {
+	public String getReqID() {
 		return reqID;
 	}
-	
+
 	public Document toDocument() {
 		return new Document().append("ticket", ticket).append("response", response).append("reqID", reqID);
 	}

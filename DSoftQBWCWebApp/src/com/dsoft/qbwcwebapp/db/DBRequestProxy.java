@@ -3,8 +3,11 @@
  */
 package com.dsoft.qbwcwebapp.db;
 
+import java.util.ArrayList;
+
 import org.bson.Document;
 
+import com.dsoft.qbwcwebapp.model.Request;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
@@ -15,7 +18,7 @@ import com.mongodb.client.MongoCursor;
  */
 public class DBRequestProxy implements DBProxyInterface {
 
-	private MongoCollection<Document> collection;
+private MongoCollection<Document> collection;
 	
 	public DBRequestProxy(MongoCollection<Document> collection) {
 		this.collection = collection;
@@ -40,16 +43,14 @@ public class DBRequestProxy implements DBProxyInterface {
 	public boolean createDocument(Document document) {
 		if (document.containsKey("ticket")) {
 			if (document.containsKey("reqID")) {
-				if (getDocument(new Document().append("reqID", document.getLong("reqID")).append("ticket", document.getString("ticket"))) == null) {
+				if (getDocument(new Document().append("reqID", document.getString("reqID")).append("ticket", document.getString("ticket"))) == null) {
 					collection.insertOne(document);
 					return true;
 				} else {
 					return false;
 				}
 			} else {
-				document.put("reqID", getNewestID(new Document().append("ticket", document.getString("ticket"))) + 1);
-				collection.insertOne(document);
-				return true;
+				return false;
 			}
 		} else {
 			return false;
@@ -70,17 +71,14 @@ public class DBRequestProxy implements DBProxyInterface {
 	public void updateDocument(Document document, Document updatedDocument) {
 		collection.findOneAndReplace(document, updatedDocument);
 	}
-	
-	public long getNewestID(Document document) {
-		long id = -1;
+
+	public ArrayList<Request> getAllRequests(Document document) {
+		ArrayList<Request> requestList = new ArrayList<Request>();
 		MongoCursor<Document> cursor = collection.find(document).iterator();
 		while (cursor.hasNext()) {
-			Document tmpDocument = cursor.next();
-			if (tmpDocument.getLong("reqID") > id) {
-				id = tmpDocument.getLong("reqID");
-			}
+			requestList.add(new Request(cursor.next()));
 		}
 		cursor.close();
-		return id;
+		return requestList;
 	}
 }

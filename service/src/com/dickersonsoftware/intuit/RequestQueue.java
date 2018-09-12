@@ -19,7 +19,7 @@ public class RequestQueue {
     public String nextXMLRequest() {
         if (index > -1 && index < requests.size()) {
             index++;
-            return requests.get(index - 1).buildXML();
+            return requests.get(index - 1).buildQBXML();
         } else {
             return null;
         }
@@ -35,13 +35,17 @@ public class RequestQueue {
     }
 
     public int getPercentComplete() {
-        double index = this.index;
-        double length = requests.size();
-        double result = (index / length) * 100;
-        if (result > 100) {
-            result = 100;
+        if (requests.size() > 0) {
+            double index = this.index;
+            double length = requests.size();
+            double result = (index / length) * 100;
+            if (result > 100) {
+                result = 100;
+            }
+            return  (int) result;
+        } else {
+            return 100;
         }
-        return  (int) result;
     }
 
     public String getTicket() {

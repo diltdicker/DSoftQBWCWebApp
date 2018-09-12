@@ -22,8 +22,13 @@ public class DBAccountProxy implements DBProxyInterface {
 
 	@Override
 	public Document getDocument(Document document) {
-		FindIterable<Document> iterable = collection.find(document);
-		return iterable.first();
+		if (document.containsKey("username")) {
+			FindIterable<Document> iterable = collection.find(new Document().append("username", document.get("username")));
+			document = iterable.first();
+			return document;
+		} else {
+			return null;
+		}
 	}
 
 	@Override

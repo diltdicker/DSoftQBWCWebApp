@@ -11,6 +11,9 @@ import com.dsoft.qbwcwebapp.model.Account;
 import com.dsoft.qbwcwebapp.model.Request;
 import com.dsoft.qbwcwebapp.model.Response;
 import com.dsoft.qbwcwebapp.security.Crypto;
+import com.intuit.developer.ArrayOfString;
+import com.intuit.developer.AuthenticateResponseDocument;
+import com.intuit.developer.SendRequestXMLResponseDocument;
 import org.bson.Document;
 
 /**
@@ -31,6 +34,9 @@ public class DSoftQBWCSoapServiceSkeleton
 
         com.intuit.developer.ConnectionErrorResponseDocument responseDocument = com.intuit.developer.ConnectionErrorResponseDocument.Factory.newInstance();
         com.intuit.developer.ConnectionErrorResponseDocument.ConnectionErrorResponse response = responseDocument.addNewConnectionErrorResponse();
+
+        connectionError0.getConnectionError().getTicket();
+
         response.setConnectionErrorResult("There was an error connecting");
         return responseDocument;
     }
@@ -44,18 +50,38 @@ public class DSoftQBWCSoapServiceSkeleton
     public com.intuit.developer.SendRequestXMLResponseDocument sendRequestXML(
         com.intuit.developer.SendRequestXMLDocument sendRequestXML2) {
 
-        System.out.println("sendRequestXMLr");
+        System.out.println("sendRequestXML 2");
 
-        com.intuit.developer.SendRequestXMLResponseDocument responseDocument = com.intuit.developer.SendRequestXMLResponseDocument.Factory.newInstance();
-        com.intuit.developer.SendRequestXMLResponseDocument.SendRequestXMLResponse response = responseDocument.addNewSendRequestXMLResponse();
+        SendRequestXMLResponseDocument responseDocument = SendRequestXMLResponseDocument.Factory.newInstance();
+        SendRequestXMLResponseDocument.SendRequestXMLResponse xmlResponse = responseDocument.addNewSendRequestXMLResponse();
 
-        Request request = RequestManager.getRequestManager().getRequestQueue(sendRequestXML2.getSendRequestXML().getTicket()).nextRequest();
-        String xml = request.buildXML();
-        if (xml != null) {
-            response.setSendRequestXMLResult(xml);
+        RequestQueue queue = RequestManager.getRequestManager().getRequestQueue(sendRequestXML2.getSendRequestXML().getTicket());
+
+        if (queue.getQueueSize() > 0) {
+            String req = queue.nextXMLRequest();
+            xmlResponse.setSendRequestXMLResult(req);
+            System.out.println(req);
         } else {
-            response.setSendRequestXMLResult("");
+            xmlResponse.setSendRequestXMLResult("");
+            System.out.println("No Requests");
         }
+
+//        xmlResponse.setSendRequestXMLResult("");
+//        return responseDocument;
+//        com.intuit.developer.SendRequestXMLResponseDocument responseDocument = com.intuit.developer.SendRequestXMLResponseDocument.Factory.newInstance();
+//        com.intuit.developer.SendRequestXMLResponseDocument.SendRequestXMLResponse response = responseDocument.addNewSendRequestXMLResponse();
+//
+//        System.out.println("getting requests");
+//        Request request = RequestManager.getRequestManager().getRequestQueue(sendRequestXML2.getSendRequestXML().getTicket()).nextRequest();
+//        String xml = request.buildXML();
+//        if (xml != null) {
+//            response.setSendRequestXMLResult(xml);
+//            System.out.println("request:");
+//            System.out.println(xml);
+//        } else {
+//            System.out.println("no request");
+//            response.setSendRequestXMLResult("");
+//        }
         return responseDocument;
     }
 
@@ -85,12 +111,19 @@ public class DSoftQBWCSoapServiceSkeleton
     public com.intuit.developer.GetLastErrorResponseDocument getLastError(
         com.intuit.developer.GetLastErrorDocument getLastError6) {
 
-        System.out.println("getLastError");
+        System.out.println("getLastError 2");
 
         com.intuit.developer.GetLastErrorResponseDocument responseDocument = com.intuit.developer.GetLastErrorResponseDocument.Factory.newInstance();
         com.intuit.developer.GetLastErrorResponseDocument.GetLastErrorResponse response = responseDocument.addNewGetLastErrorResponse();
-        response.setGetLastErrorResult("unknown error");
-        return responseDocument;
+
+        String ticket = getLastError6.getGetLastError().getTicket();
+        if (RequestManager.getRequestManager().getRequestQueue(ticket).getQueueSize() == 0) {
+            response.setGetLastErrorResult("No Requests");
+            return responseDocument;
+        } else {
+            response.setGetLastErrorResult("Unknown Error encountered");
+            return responseDocument;
+        }
     }
 
     /**
@@ -102,31 +135,87 @@ public class DSoftQBWCSoapServiceSkeleton
     public com.intuit.developer.AuthenticateResponseDocument authenticate(
         com.intuit.developer.AuthenticateDocument authenticate8) {
 
-        System.out.println("authenticate");
+        System.out.println("authenticate 6");
 
-        com.intuit.developer.AuthenticateResponseDocument responseDocument = com.intuit.developer.AuthenticateResponseDocument.Factory.newInstance();
-        com.intuit.developer.AuthenticateResponseDocument.AuthenticateResponse response = responseDocument.addNewAuthenticateResponse();
-        com.intuit.developer.ArrayOfString array = com.intuit.developer.ArrayOfString.Factory.newInstance();
+        AuthenticateResponseDocument responseDocument = AuthenticateResponseDocument.Factory.newInstance();
+        AuthenticateResponseDocument.AuthenticateResponse response = responseDocument.addNewAuthenticateResponse();
+        ArrayOfString array = ArrayOfString.Factory.newInstance();
+        array.setStringArray(new String[] {""});
         String username = authenticate8.getAuthenticate().getStrUserName();
         String password = authenticate8.getAuthenticate().getStrPassword();
-        Document accountDocument = DBProxyFactory.getFactory().getAccounts().getDocument(new Document().append("username", username));
+        Document accountDocument = null;
+        try {
+            accountDocument = DBProxyFactory.getFactory().getAccounts().getDocument(new Document().append("username", username));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Couldn't connect to DB");
+            array.setStringArray(new String[] {"nvu", ""});
+        }
         if (accountDocument != null) {
             Account account = new Account(accountDocument);
             if (Crypto.authenticate(account.getPasshash(), password)) {
-                RequestManager.getRequestManager().createRequestQueue(account.getTicket(), DBProxyFactory.getFactory()
-                        .getRequests().getAllRequests(new Document().append("ticket", account.getTicket())));
-                if (RequestManager.getRequestManager().getRequestQueue(account.getTicket()).getQueueSize() > 0) {
-                    array.setStringArray(new String[] { account.getTicket(), ""});
-                } else {
-                    array.setStringArray(new String[] { "none", ""});
-                }
+                array.setStringArray(new String[] {account.getTicket(), ""});
+                RequestManager.getRequestManager().createRequestQueue(account.getTicket(),
+                        DBProxyFactory.getFactory().getRequests().getAllRequests(new Document().append("ticket", account.getTicket())));
             } else {
-                array.setStringArray(new String[] { "nvu", ""});
+                array.setStringArray(new String[] {"nvu", ""});
             }
-        } else {
-            array.setStringArray(new String[] { "nvu", ""});
         }
         response.setAuthenticateResult(array);
+        for (int i = 0; i < array.getStringArray().length; i++) {
+            System.out.println(array.getStringArray(i));
+        }
+//        System.out.println("username=" + username + " password=" + password);
+//        System.out.println("breakpoint 1");
+//        try {
+//            Document accountDocument = DBProxyFactory.getFactory().getAccounts().getDocument(new Document().append("username", username));
+//            System.out.println(accountDocument != null);
+//            System.out.println(accountDocument.toJson());
+//            Account account = new Account(accountDocument);
+//            System.out.println("breakpoint 2");
+//            System.out.println(account.getTicket());
+//            System.out.println("breakpoint 3");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        array.setStringArray(new String[] {"8b124c93-abcd-449c-a4ea-fa70da44d75e", ""});
+////        array.setStringArray(new String[] { account.getTicket(), ""});
+//        response.setAuthenticateResult(array);
+//        for (int i = 0; i < array.getStringArray().length; i++) {
+//            System.out.println(array.getStringArray(i));
+//        }
+//        return responseDocument;
+
+//        com.intuit.developer.AuthenticateResponseDocument responseDocument = com.intuit.developer.AuthenticateResponseDocument.Factory.newInstance();
+//        com.intuit.developer.AuthenticateResponseDocument.AuthenticateResponse response = responseDocument.addNewAuthenticateResponse();
+//        com.intuit.developer.ArrayOfString array = com.intuit.developer.ArrayOfString.Factory.newInstance();
+//        String username = authenticate8.getAuthenticate().getStrUserName();
+//        String password = authenticate8.getAuthenticate().getStrPassword();
+//        Document accountDocument = DBProxyFactory.getFactory().getAccounts().getDocument(new Document().append("username", username));
+//        if (accountDocument != null) {
+//            System.out.println("2 b authenticated");
+//            Account account = new Account(accountDocument);
+//            if (Crypto.authenticate(account.getPasshash(), password)) {
+//                System.out.println("authenticated");
+//                RequestManager.getRequestManager().createRequestQueue(account.getTicket(), DBProxyFactory.getFactory()
+//                        .getRequests().getAllRequests(new Document().append("ticket", account.getTicket())));
+//                if (RequestManager.getRequestManager().getRequestQueue(account.getTicket()).getQueueSize() > 0) {
+//                    System.out.println("added request queue");
+//                    array.setStringArray(new String[] { account.getTicket(), ""});
+//                } else {
+//                    System.out.println("nothing in request queue");
+//                    array.setStringArray(new String[] { "none", ""});
+//                }
+//            } else {
+//                System.out.println("invalid user 2");
+//                array.setStringArray(new String[] { "nvu", ""});
+//            }
+//        } else {
+//            System.out.println("invalid user");
+//            array.setStringArray(new String[] { "nvu", ""});
+//        }
+//        System.out.println(array.getStringArray()[0]);
+//        response.setAuthenticateResult(array);
         return responseDocument;
     }
 
@@ -150,16 +239,18 @@ public class DSoftQBWCSoapServiceSkeleton
 
         String responseStr = receiveResponseXML10.getReceiveResponseXML().getResponse();
         Response response1;
-        if (responseStr != null) {
+        if (responseStr != null && !responseStr.equals("")) {
             response1 = new Response(request.getTicket(), responseStr, request.getReqID());
         } else {
             response1 = new Response(request.getTicket(), receiveResponseXML10.getReceiveResponseXML().getHresult() +
                     " - " + receiveResponseXML10.getReceiveResponseXML().getMessage(), request.getReqID());
         }
         DBProxyFactory.getFactory().getResponses().createDocument(response1.toDocument());
+        System.out.println(response1.toDocument().toJson());
 
         DBProxyFactory.getFactory().getRequests().deleteDocument(new Document().append("ticket",
                 receiveResponseXML10.getReceiveResponseXML().getTicket()).append("reqID", request.getReqID()));
+        System.out.println(RequestManager.getRequestManager().getRequestQueue(receiveResponseXML10.getReceiveResponseXML().getTicket()).getPercentComplete());
         response.setReceiveResponseXMLResult(RequestManager.getRequestManager().getRequestQueue(receiveResponseXML10.getReceiveResponseXML().getTicket()).getPercentComplete());
         return responseDocument;
     }

@@ -45,7 +45,7 @@ public class Account {
 			} catch (Exception e) {
 				return Response.noContent().status(Status.BAD_REQUEST).build();
 			}
-			newAccount.put("token", UUID.randomUUID().toString());
+			newAccount.put("ticket", UUID.randomUUID().toString());
 			if (accountProxy.createDocument(newAccount)) {
 				return Response.noContent().status(Status.CREATED).build();
 			} else {
@@ -78,8 +78,8 @@ public class Account {
 		root.addContent(new Element("AppDescription").addContent("Web API for Quick Books Web Connector"));
 		root.addContent(new Element("AppSupport").addContent("https://dickersonsoftware.com"));
 		root.addContent(new Element("UserName").addContent(username));
-		root.addContent(new Element("OwnerID").addContent(ownerID));
-		root.addContent(new Element("FileID").addContent(fileID));
+		root.addContent(new Element("OwnerID").addContent("{" + ownerID + "}"));
+		root.addContent(new Element("FileID").addContent("{" + fileID + "}"));
 		root.addContent(new Element("QBType").addContent("QBFS"));
 		root.addContent(new Element("Style").addContent("DocWrapped"));
 		qwc.setRootElement(root);

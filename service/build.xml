@@ -60,6 +60,7 @@
             <classpath refid="axis2.class.path"/>
             <classpath refid="added.class.path"/>
         </javac>
+        
     </target>
     <target depends="compile.src" name="compile.test" if="jars.ok">
         <javac debug="on" memoryMaximumSize="256m" memoryInitialSize="256m" fork="true" destdir="${classes}">
@@ -81,6 +82,11 @@
                 <include name="*.xsd"/>
                 <exclude name="**/schemaorg_apache_xmlbean/**"/>
             </fileset>
+        </copy>
+        <copy toDir="${classes}/lib">
+            <fileset dir="${added.lib.dir}">
+            <include name="*.jar"/>
+        </fileset>
         </copy>
         <copy file="${lib}/${xbeans.packaged.jar.name}" toDir="${classes}/lib"/>
         <jar destfile="${lib}/${name}.aar">

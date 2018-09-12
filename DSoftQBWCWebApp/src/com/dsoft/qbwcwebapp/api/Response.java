@@ -26,31 +26,32 @@ import net.sf.json.xml.XMLSerializer;
 public class Response {
 
 	@GET
-	public javax.ws.rs.core.Response getResponse(@PathParam("username") String username, @PathParam("reqid") Long reqIDStr) {
-		Document document = DBProxyFactory.getFactory().getAccounts().getDocument(new Document().append("username", username));
-		if (document != null) {
-			Account account = new Account(document);
-			document = DBProxyFactory.getFactory().getResponses().getDocument(new Document().append("ticket", account.getTicket()).append("reqID", reqIDStr));
+	public javax.ws.rs.core.Response getResponse(@PathParam("username") String username, @PathParam("reqid") String reqIDStr) {
+		Document accountDocument = DBProxyFactory.getFactory().getAccounts().getDocument(new Document().append("username", username));
+		if (accountDocument != null) {
+			Account account = new Account(accountDocument);
+			Document document = DBProxyFactory.getFactory().getResponses().getDocument(new Document().append("ticket", account.getTicket()).append("reqID", reqIDStr));
 			if (document != null) {
 				com.dsoft.qbwcwebapp.model.Response response = new com.dsoft.qbwcwebapp.model.Response(document);
-				XMLSerializer serializer = new XMLSerializer();
-				String json = ((JSON) serializer.read(response.getResponse())).toString();
-				return javax.ws.rs.core.Response.ok(json, MediaType.APPLICATION_JSON).status(Status.OK).build();
+				return javax.ws.rs.core.Response.ok(response.toDocument().toJson(), MediaType.APPLICATION_JSON).status(Status.OK).build();
 			} else {
 				return javax.ws.rs.core.Response.noContent().status(Status.NOT_FOUND).build();
 			}
 		} else {
-			return javax.ws.rs.core.Response.noContent().status(Status.NOT_FOUND).build();
+			return javax.ws.rs.core.Response.noContent().status(Status.UNAUTHORIZED).build();
 		}
 	}
 	
 	@DELETE
-	public javax.ws.rs.core.Response deleteResponse(@PathParam("username") String username, @PathParam("reqid") Long reqIDStr) {
+	public javax.ws.rs.core.Response deleteResponse(@PathParam("username") String username, @PathParam("reqid") String reqIDStr) {
 		Document document = DBProxyFactory.getFactory().getAccounts().getDocument(new Document().append("username", username));
 		if (document != null) {
 			Account account = new Account(document);
 			DBProxyFactory.getFactory().getResponses().deleteDocument(new Document().append("ticket", account.getTicket()).append("reqID", reqIDStr));
+			return javax.ws.rs.core.Response.noContent().status(Status.OK).build();
+		} else {
+			return javax.ws.rs.core.Response.noContent().status(Status.UNAUTHORIZED).build();
 		}
-		return javax.ws.rs.core.Response.noContent().status(Status.OK).build();
+		
 	}
 }
