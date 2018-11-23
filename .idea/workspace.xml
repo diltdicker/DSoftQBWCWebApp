@@ -1,24 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7f8e95be-ae84-4e11-bfc9-e06a29613629" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/api/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/api/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/api/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/api/Request.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/api/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/api/Response.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/api/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/api/Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/db/DBAccountProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/db/DBAccountProxy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/db/DBProxyFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/db/DBProxyFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/db/DBProxyInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/db/DBProxyInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/db/DBRequestProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/db/DBRequestProxy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/db/DBResponseProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/DSoftQBWCWebApp/src/com/dsoft/qbwcwebapp/db/DBResponseProxy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/com/dickersonsoftware/intuit/DSoftQBWCSoapServiceSkeleton.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/com/dickersonsoftware/intuit/DSoftQBWCSoapServiceSkeleton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBAccountProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBAccountProxy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBProxyFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBProxyFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBProxyInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBProxyInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBRequestProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBRequestProxy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBResponseProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/com/dsoft/qbwcwebapp/db/DBResponseProxy.java" afterDir="false" />
-    </list>
+    <list default="true" id="7f8e95be-ae84-4e11-bfc9-e06a29613629" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,7 +13,7 @@
     <session id="-1029128946">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="4" />
+          <entry key="project.closed" value="5" />
           <entry key="project.open.time.18" value="1" />
           <entry key="project.open.time.20" value="1" />
           <entry key="project.open.time.33" value="1" />
@@ -72,7 +55,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/service/src/com/dickersonsoftware/intuit/DSoftQBWCSoapServiceSkeleton.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="577">
+            <state relative-caret-position="-1493">
               <caret line="84" column="44" selection-start-line="84" selection-start-column="44" selection-end-line="84" selection-end-column="44" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -308,7 +291,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1536724810623" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1536724819880" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
@@ -341,7 +324,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-1" width="1920" height="1053" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Designer" order="0" />
       <window_info id="UI Designer" order="1" />
@@ -525,7 +507,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/service/src/com/dickersonsoftware/intuit/DSoftQBWCSoapServiceSkeleton.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="577">
+        <state relative-caret-position="-1493">
           <caret line="84" column="44" selection-start-line="84" selection-start-column="44" selection-end-line="84" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
