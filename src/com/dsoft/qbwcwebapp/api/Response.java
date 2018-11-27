@@ -28,6 +28,12 @@ import net.sf.json.xml.XMLSerializer;
 @Path("/response/{username}/{reqid}")
 public class Response {
 
+	/**
+	 * 
+	 * @param username
+	 * @param reqIDStr
+	 * @return
+	 */
 	@GET
 	public javax.ws.rs.core.Response getResponse(@PathParam("username") String username, @PathParam("reqid") String reqIDStr) {
 		DBAccountProxy accountProxy = DBProxyFactory.getAccounts();
@@ -49,6 +55,12 @@ public class Response {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param username
+	 * @param reqIDStr
+	 * @return
+	 */
 	@DELETE
 	public javax.ws.rs.core.Response deleteResponse(@PathParam("username") String username, @PathParam("reqid") String reqIDStr) {
 		DBAccountProxy accountProxy = DBProxyFactory.getAccounts();
