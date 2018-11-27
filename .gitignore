@@ -1,2 +1,2 @@
-*.class
-service/build
+/build/
+/target/
