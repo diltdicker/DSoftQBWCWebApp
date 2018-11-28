@@ -29,7 +29,7 @@ For each client, a new account must be created with a username and password. A .
 	Body (JSON) :
 	*	admin-username : Default "dsoft"
 	*	admin-password : Default "dsoft"
-	*	client-admin : The username for the new client
+	*	client-username : The username for the new client
 	*	client-password : The password for the new client
 * **Delete client account** - DELETE
 
@@ -38,7 +38,7 @@ For each client, a new account must be created with a username and password. A .
 	Body (JSON) :
 	*	admin-username : Default "dsoft"
 	*	admin-password : Default "dsoft"
-	*	client-admin : The username for the new client
+	*	client-username : The username for the new client
 * **Send a qbxml request** - POST
 
 	```http://{hostname}/DSoftQBWCWebApp/qbwc-api/request/{client-username}```
