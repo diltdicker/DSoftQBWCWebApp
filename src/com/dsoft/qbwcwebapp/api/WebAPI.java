@@ -13,7 +13,7 @@ import org.glassfish.jersey.server.ResourceConfig;
  * @author dillon
  *
  */
-@ApplicationPath("qbxml")
+@ApplicationPath("qbwc-api")
 public class WebAPI extends ResourceConfig{
 	
 	public WebAPI() {
